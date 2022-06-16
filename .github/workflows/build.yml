@@ -1,0 +1,17 @@
+on: [push]
+
+name: Build
+
+jobs:
+  build:
+    name: Build binary (release mode)
+    # Improvement: run on an image including the Rust toolchain and a pinned
+    # version of it to avoid reinstalling it everytime through the
+    # `actions-rs/toolchain` Actiojn
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - run: cargo build --release --all-features
