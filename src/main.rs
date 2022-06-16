@@ -4,13 +4,13 @@ use serde::{de,Serialize, Deserialize, Deserializer};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct RepoMetrics {
-    #[serde(deserialize_with = "deserialize_totalCount")]
+    #[serde(deserialize_with = "deserialize_nested_total_count")]
     all: i32,
-    #[serde(deserialize_with = "deserialize_totalCount")]
+    #[serde(deserialize_with = "deserialize_nested_total_count")]
     open: i32,
 }
 
-fn deserialize_totalCount<'de, D: Deserializer<'de>>(deserializer: D) -> Result<i32, D::Error> {
+fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) -> Result<i32, D::Error> {
     #[derive(Serialize, Deserialize, Debug)]
     struct TotalCount {
         #[serde(alias = "totalCount")] 
