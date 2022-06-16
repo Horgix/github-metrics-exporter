@@ -1,0 +1,12 @@
+[package]
+name = "github-metrics"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+octocrab = "0.16"
+serde = "1.0.137"
+serde_json = "1.0.81"
+tokio = { versioner = "1.18.1", features = ["macros", "rt-multi-thread"] }
