@@ -36,10 +36,10 @@ async fn main() -> octocrab::Result<()> {
         .graphql("
         query RepoStats {
             pullRequests: repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {
-              open:pullRequests(states: OPEN) {
+              all: pullRequests {
                 totalCount
               }
-              all:pullRequests {
+              open: pullRequests(states: OPEN) {
                 totalCount
               }
             }
