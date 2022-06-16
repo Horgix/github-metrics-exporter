@@ -42,6 +42,18 @@ async fn main() -> octocrab::Result<()> {
               open: pullRequests(states: OPEN) {
                 totalCount
               }
+              oldest: pullRequests(
+                orderBy: {field: UPDATED_AT, direction: ASC}
+                states: OPEN
+                first: 1
+              ) {
+                edges {
+                  node {
+                    createdAt
+                    url
+                  }
+                }
+              }
             }
           }")
         .await?;
