@@ -74,10 +74,6 @@ async fn main() -> octocrab::Result<()> {
     //println!("{}", response);
 
     Ok(())
-    //let repo = octocrab.repos("rust-lang", "rust").get().await?;
-    //let repo_metrics = octocrab.repos("rust-lang", "rust").get_community_profile_metrics().await?;
-    //let issue = octocrab::instance().pulls("octocrab", "repo").get(404).await?;
-
 // Go through every page of issues. Warning: There's no rate limiting so
 //// be careful.
 //let results = octocrab.all_pages::<models::issues::Issue>(page).await?;
