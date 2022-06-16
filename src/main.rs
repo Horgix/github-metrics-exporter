@@ -35,7 +35,7 @@ async fn main() -> octocrab::Result<()> {
     let response: serde_json::Value = github_client
         .graphql("
         query RepoStats {
-            repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {
+            pullRequests: repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {
               open:pullRequests(states: OPEN) {
                 totalCount
               }
@@ -47,7 +47,7 @@ async fn main() -> octocrab::Result<()> {
         .await?;
 
     match response.as_object() {
-        Some(map) => match map.get("data").unwrap().get("repository") {
+        Some(map) => match map.get("data").unwrap().get("pullRequests") {
             Some(map) => {
                 //let foo: RepoMetrics = serde_json::from_value(map).unwrap();
                 match Deserialize::deserialize(map) {
