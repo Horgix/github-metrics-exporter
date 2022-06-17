@@ -1,13 +1,18 @@
 use octocrab::Octocrab;
 use serde::{de,Serialize, Deserialize, Deserializer};
 
-
 #[derive(Serialize, Deserialize, Debug)]
-struct RepoMetrics {
+struct PullRequestsMetrics {
     #[serde(deserialize_with = "deserialize_nested_total_count")]
     all: i32,
     #[serde(deserialize_with = "deserialize_nested_total_count")]
     open: i32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct RepoMetrics {
+    #[serde(alias = "pullRequests")]
+    pull_requests: PullRequestsMetrics,
 }
 
 fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) -> Result<i32, D::Error> {
@@ -55,7 +60,7 @@ async fn main() -> octocrab::Result<()> {
         .await?;
 
     match response.as_object() {
-        Some(map) => match map.get("data").unwrap().get("pullRequests") {
+        Some(map) => match map.get("data") {
             Some(map) => {
                 //let foo: RepoMetrics = serde_json::from_value(map).unwrap();
                 match Deserialize::deserialize(map) {
