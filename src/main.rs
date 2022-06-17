@@ -19,11 +19,7 @@ fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) ->
 
     let res: TotalCount = de::Deserialize::deserialize(deserializer)?;
     return Ok(res.total_count);
-    //serde_json::from_value(s).map_err(de::Error::custom) 
 }
-
-///
-/// {"data":{"repository":{"all":{"totalCount":2},"open":{"totalCount":1}}}}
 
 #[tokio::main]
 async fn main() -> octocrab::Result<()> {
