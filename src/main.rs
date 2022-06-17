@@ -62,7 +62,6 @@ async fn main() -> octocrab::Result<()> {
     match response.as_object() {
         Some(map) => match map.get("data") {
             Some(map) => {
-                //let foo: RepoMetrics = serde_json::from_value(map).unwrap();
                 match Deserialize::deserialize(map) {
                     Ok::<RepoMetrics, _>(repometrics) => println!("{:?}", repometrics),
                     Err(_) => println!("LOL FAILED3"),
@@ -72,20 +71,7 @@ async fn main() -> octocrab::Result<()> {
         }
         None => println!("LOL FAILED2"),
     }
-    //println!("{}", response);
 
     Ok(())
-// Go through every page of issues. Warning: There's no rate limiting so
-//// be careful.
-//let results = octocrab.all_pages::<models::issues::Issue>(page).await?;
-//
-//    println!(
-//        "{} has {} stars and {}% health percentage",
-//        repo.full_name.unwrap(),
-//        repo.stargazers_count.unwrap_or(0),
-//        repo_metrics.health_percentage
-//    );
-//
-//    Ok(())
 }
 
