@@ -65,10 +65,35 @@ async fn main() -> anyhow::Result<()> {
 
     let response = raw_response.as_object().context("failed to interpret GitHub GraphQL API answer as a Map")?;
 
-    // if response.contains_key("errors") {
-    //     eprintln!("GraphQL query returned errors: {:?}", response.get("errors"));
-    //     Err(())
-    // }
+    /*
+    If, for example, the GraphQL query targets an unexisting repository,
+    the answer will not be a total error. Instead, it will include an `errors` key.
+    Example:
+        {
+          "data": {
+            "pullRequests": null
+          },
+          "errors": [
+            {
+              "type": "NOT_FOUND",
+              "path": [
+                "pullRequests"
+              ],
+              "locations": [
+                {
+                  "line": 7,
+                  "column": 13
+                }
+              ],
+              "message": "Could not resolve to a Repository with the name 'UnexistingOwner/UnexistingRepo'."
+            }
+          ]
+        }
+    The following condition handles that case, though the errors won't be formatted nicely
+    */
+    if response.contains_key("errors") {
+        anyhow::bail!(format!("found errors in the GraphQL API query answer: {:?}", response.get("errors")))
+    }
     let repo_metrics: RepoMetrics = Deserialize::deserialize(
             response
             .get("data")
