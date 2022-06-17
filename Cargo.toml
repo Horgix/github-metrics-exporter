@@ -2,6 +2,10 @@
 name = "github-metrics"
 version = "0.1.0"
 edition = "2021"
+authors = ["Alexis 'Horgix' Chotard <alexis.horgix.chotard@gmail.com>"]
+description = "A metrics exporter for GitHub metrics"
+repository = "https://github.com/Horgix/github-metrics-exporter"
+keywords = ["github", "metrics", "exporter"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
