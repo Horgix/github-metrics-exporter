@@ -44,7 +44,7 @@ async fn main() -> octocrab::Result<()> {
                 totalCount
               }
               oldest: pullRequests(
-                orderBy: {field: UPDATED_AT, direction: ASC}
+                orderBy: {field: CREATED_AT, direction: ASC}
                 states: OPEN
                 first: 1
               ) {
