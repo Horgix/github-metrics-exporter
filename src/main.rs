@@ -28,7 +28,7 @@ fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) ->
     }
 
     let res: TotalCount = de::Deserialize::deserialize(deserializer)?;
-    return Ok(res.total_count);
+    Ok(res.total_count)
 }
 
 // Deserializes a nested `createdAt` info from a GitHub GraphQL query response
@@ -153,7 +153,8 @@ async fn main() -> anyhow::Result<()> {
             .get("data")
             .context("failed to find 'data' key inside response")?
         ).context("failed to deserialize GraphQL query answer")?;
-    println!("{:?}", repo_metrics);
+    //println!("{:?}", repo_metrics);
+    println!("{}", serde_json::to_string_pretty(&repo_metrics).unwrap());
 
     Ok(())
 }
