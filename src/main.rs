@@ -1,14 +1,10 @@
 use octocrab::Octocrab;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize};
 use anyhow::{Context};
 
-mod pull_requests_metrics;
+mod metrics;
+use metrics::repository::RepoMetrics;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct RepoMetrics {
-    #[serde(alias = "pullRequests")]
-    pull_requests: pull_requests_metrics::PullRequestsMetrics,
-}
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let token = std::env::var("GITHUB_TOKEN").expect("environment variable 'GITHUB_TOKEN' is required");
