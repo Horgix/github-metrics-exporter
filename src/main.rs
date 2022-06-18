@@ -39,7 +39,7 @@ async fn main() -> anyhow::Result<()> {
               }
             }
           }")
-        .await.context("failed to query GitHub GrrphQL API")?;
+        .await.context("failed to query GitHub GraphQL API")?;
 
     let response = raw_response.as_object().context("failed to interpret GitHub GraphQL API answer as a Map")?;
 
