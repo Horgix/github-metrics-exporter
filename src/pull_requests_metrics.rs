@@ -46,6 +46,7 @@ fn deserialize_duration_since_creation_date<'de, D: Deserializer<'de>>(deseriali
 
     if edges.len() != 1 {
         // TODO
+        panic!("Didn't find any edge - this should be handled gracefully");
     }
     let raw_created_at: &str = edges[0]
         .as_object().expect("failed to interpret first edge as a Map")
