@@ -3,6 +3,7 @@ use serde::{Deserialize};
 use anyhow::{Context};
 
 mod metrics;
+mod graphql_helpers;
 use metrics::repository::RepoMetrics;
 
 #[tokio::main]
@@ -16,29 +17,20 @@ async fn main() -> anyhow::Result<()> {
         .context("failed to initialize GitHub API client with Octocrab library")?;
 
     let raw_response: serde_json::Value = github_client
-        .graphql("
-        query RepoStats {
-            pullRequests: repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {
-              all: pullRequests {
-                totalCount
-              }
-              open: pullRequests(states: OPEN) {
-                totalCount
-              }
-              oldest: pullRequests(
-                orderBy: {field: CREATED_AT, direction: ASC}
-                states: OPEN
-                first: 1
-              ) {
-                edges {
-                  node {
-                    createdAt
-                    url
-                  }
-                }
-              }
-            }
-          }")
+        .graphql(&format!(
+        "
+        query RepoStats {{
+            pullRequests: repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {{
+                {all_pull_requests}
+                {open_pull_requests}
+                {older_pull_request}
+            }}
+          }}
+          ",
+          all_pull_requests=graphql_helpers::GRAPHQL_REPO_SUBQUERY_ALL_PULL_REQUESTS,
+          open_pull_requests=graphql_helpers::GRAPHQL_REPO_SUBQUERY_ALL_OPEN_PULL_REQUEST,
+          older_pull_request=graphql_helpers::GRAPHQL_REPO_SUBERY_OLDEST_PULL_REQUEST,
+        ))
         .await.context("failed to query GitHub GraphQL API")?;
 
     let response = raw_response.as_object().context("failed to interpret GitHub GraphQL API answer as a Map")?;
