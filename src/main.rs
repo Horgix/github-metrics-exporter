@@ -15,18 +15,24 @@ async fn main() -> anyhow::Result<()> {
         .personal_token(token)
         .build()
         .context("failed to initialize GitHub API client with Octocrab library")?;
+    
+    static REPOSITORY_OWNER: &'static str = "Awesome-Demo-App";
+    static REPOSITORY_NAME: &'static str = "todolist-api-go";
+
 
     let raw_response: serde_json::Value = github_client
         .graphql(&format!(
         "
         query RepoStats {{
-            pullRequests: repository(name: \"todolist-api-go\", owner: \"Awesome-Demo-App\") {{
+            pullRequests: repository(owner: \"{repository_owner}\", name: \"{repository_name}\") {{
                 {all_pull_requests}
                 {open_pull_requests}
                 {older_pull_request}
             }}
           }}
           ",
+          repository_owner = REPOSITORY_OWNER,
+          repository_name = REPOSITORY_NAME,
           all_pull_requests=graphql_helpers::GRAPHQL_REPO_SUBQUERY_ALL_PULL_REQUESTS,
           open_pull_requests=graphql_helpers::GRAPHQL_REPO_SUBQUERY_ALL_OPEN_PULL_REQUEST,
           older_pull_request=graphql_helpers::GRAPHQL_REPO_SUBERY_OLDEST_PULL_REQUEST,
