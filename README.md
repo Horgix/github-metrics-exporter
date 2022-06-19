@@ -1,5 +1,7 @@
 # GitHub Metrics Exporter
 
+[![GitHub Actions badge - `Build` workflow](https://img.shields.io/github/workflow/status/Horgix/github-metrics-exporter/Build/main?label=Build)](https://github.com/Horgix/github-metrics-exporter/actions/workflows/build.yml)
+
 This project is a "metric exporter" for GitHub metrics. Essentially, it
 collects them through GitHub API (mainly the GraphQL one) and expose them e.g.
 through an HTTP endpoint with a Prometheus format.
