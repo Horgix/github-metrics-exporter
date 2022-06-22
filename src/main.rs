@@ -35,9 +35,6 @@ async fn main() -> anyhow::Result<()> {
         .build()
         .context("failed to initialize GitHub API client with Octocrab library")?;
     
-    // static REPOSITORY_OWNER: &'static str = "Awesome-Demo-App";
-    // static REPOSITORY_NAME: &'static str = "todolist-api-go";
-// 
     // let repo_metrics = fetch_metrics_from_github(github_client, REPOSITORY_OWNER, REPOSITORY_NAME).await?;
 
     //println!("{:?}", repo_metrics);
@@ -82,24 +79,19 @@ async fn main() -> anyhow::Result<()> {
     
     let state = Arc::new(AppState {exporter, github_client});//, pull_requests_gauge: newrecorder});
 
-
-    // let encoder = TextEncoder::new();
-    // let metric_families = exporter.registry().gather();
-    // println!("{:?}", metric_families);
-    // let result = encoder.encode_to_string(&metric_families);
-
-    // println!("{}", result.unwrap());
-
     let make_svc = make_service_fn(move |_conn| {
       let state = state.clone();
+
       // This is the `Service` that will handle the connection.
       // `service_fn` is a helper to convert a function that
       // returns a Response into a `Service`.
       async move {
-        Ok::<_, std::convert::Infallible>(service_fn(
-          move |req| prometheus_export::serve_http_requests_with_metrics_endpoint(req, state.clone())
-        ))
-    }
+        Ok::<_, std::convert::Infallible>(
+          service_fn(
+            move |req| prometheus_export::serve_http_requests_with_metrics_endpoint(req, state.clone())
+          )
+        )
+      }
     });
 
     let addr = ([127, 0, 0, 1], 3000).into();

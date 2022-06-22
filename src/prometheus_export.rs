@@ -34,6 +34,7 @@ pub async fn serve_http_requests_with_metrics_endpoint<'a>(
           let encoder = TextEncoder::new();
           let metric_families = state.exporter.registry().gather();
           encoder.encode(&metric_families, &mut buffer).unwrap();
+          // let result = encoder.encode_to_string(&metric_families);
 
           Response::builder()
               .status(200)

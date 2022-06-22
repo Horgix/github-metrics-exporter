@@ -23,19 +23,21 @@ fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) ->
     Ok(res.total_count)
 }
 
-// Deserializes a nested `createdAt` info from a GitHub GraphQL query response
-// into a Duration since this time
-// Example of input:
-//  "oldest": {
-//    "edges": [
-//      {
-//        "node": {
-//          "createdAt": "2021-12-31T25:59:59Z",
-//          "url": "https://github.com/SomeOwner/SomeRepo/pull/42"
-//        }
-//      }
-//    ]
-//  }
+/*
+  Deserializes a nested `createdAt` info from a GitHub GraphQL query response
+  into a Duration since this time
+  Example of input:
+   "oldest": {
+     "edges": [
+       {
+         "node": {
+           "createdAt": "2021-12-31T25:59:59Z",
+           "url": "https://github.com/SomeOwner/SomeRepo/pull/42"
+         }
+       }
+     ]
+   }
+*/
 fn deserialize_duration_since_creation_date<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Duration, D::Error> {
     let answer: serde_json::Map<String, serde_json::Value> = de::Deserialize::deserialize(deserializer)?;
     let edges = answer

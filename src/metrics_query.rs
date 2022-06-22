@@ -42,15 +42,8 @@ pub async fn fetch_metrics_from_github(
           "errors": [
             {
               "type": "NOT_FOUND",
-              "path": [
-                "pullRequests"
-              ],
-              "locations": [
-                {
-                  "line": 7,
-                  "column": 13
-                }
-              ],
+              "path": [ "pullRequests" ],
+              "locations": [ { "line": 7, "column": 13 } ],
               "message": "Could not resolve to a Repository with the name 'UnexistingOwner/UnexistingRepo'."
             }
           ]
