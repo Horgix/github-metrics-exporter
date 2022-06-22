@@ -5,12 +5,12 @@ use chrono::{DateTime, FixedOffset, Duration};
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PullRequestsMetrics {
     #[serde(deserialize_with = "deserialize_nested_total_count")]
-    all: i32,
+    pub all: i32,
     #[serde(deserialize_with = "deserialize_nested_total_count")]
-    open: i32,
+    pub open: i32,
     #[serde(deserialize_with = "deserialize_duration_since_creation_date")]
     #[serde(serialize_with = "serialize_duration")]
-    oldest: Duration,
+    pub oldest: Duration,
 }
 fn deserialize_nested_total_count<'de, D: Deserializer<'de>>(deserializer: D) -> Result<i32, D::Error> {
     #[derive(Serialize, Deserialize, Debug)]
