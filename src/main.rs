@@ -17,7 +17,7 @@ use hyper::{
 use std::sync::Arc;
 
 pub static REPOSITORY_OWNER: &'static str = "Horgix";
-pub static REPOSITORY_NAME: &'static str = "todolist-api-go";
+pub static REPOSITORY_NAME: &'static str = "kind-demo";
 pub static REPOSITORY_NAMES: &'static [&'static str] = &[
   "incidents-automation-app",
   "kind-demo",

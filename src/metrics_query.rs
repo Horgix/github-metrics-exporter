@@ -10,6 +10,7 @@ pub async fn fetch_metrics_from_github(
   repository_owner: &str,
   repository_name: &str,
 ) -> Result<RepoMetrics, anyhow::Error> {
+    println!("Fetching metrics from GitHub...");
     let raw_response: serde_json::Value = github_client
         .graphql(&format!(
         "
