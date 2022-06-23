@@ -6,7 +6,7 @@ use super::metrics;
 use super::graphql_helpers;
 
 pub async fn fetch_metrics_from_github(
-  github_client: &octocrab::Octocrab,
+  github_client: octocrab::Octocrab,
   repository_owner: &str,
   repository_name: &str,
 ) -> Result<RepoMetrics, anyhow::Error> {

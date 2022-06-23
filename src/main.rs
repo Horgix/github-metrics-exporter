@@ -2,7 +2,7 @@ use octocrab::Octocrab;
 use anyhow::{Context};
 // use futures::future;
 
-// use opentelemetry::{KeyValue, metrics::ObserverResult};
+//  use opentelemetry::{KeyValue, metrics::BatchObserverResult};
 use opentelemetry_prometheus::PrometheusExporter;
 
 mod metrics;
@@ -16,19 +16,26 @@ use hyper::{
 };
 use std::sync::Arc;
 
-pub static REPOSITORY_OWNER: &'static str = "Awesome-Demo-App";
+pub static REPOSITORY_OWNER: &'static str = "Horgix";
 pub static REPOSITORY_NAME: &'static str = "todolist-api-go";
+pub static REPOSITORY_NAMES: &'static [&'static str] = &[
+  "incidents-automation-app",
+  "kind-demo",
+  "github-demo",
+];
 
 pub struct AppState {
   exporter: PrometheusExporter,
   github_client: octocrab::Octocrab,
   // pull_requests_gauge: opentelemetry::metrics::ValueObserver<u64>,
+  //metrics_observer: BatchObserverResult,
+  opentelemetry_meter: opentelemetry::metrics::Meter,
 }
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let token = std::env::var("GITHUB_TOKEN").expect("environment variable 'GITHUB_TOKEN' is required");
 
+    let token = std::env::var("GITHUB_TOKEN").expect("environment variable 'GITHUB_TOKEN' is required");
     // Bootstrap an authenticated GitHub client
     let github_client = Octocrab::builder()
         .personal_token(token)
@@ -43,12 +50,7 @@ async fn main() -> anyhow::Result<()> {
     let exporter = opentelemetry_prometheus::exporter().init();
 
     // Metrics for OpenTelemetry
-    // let meter = opentelemetry::global::meter("github-metrics-exporter");
-
-    // let recorder = meter
-    //   .i64_up_down_counter("pull_requests")
-    //   .with_description("Pull Requests metrics by state")
-    //   .init();
+    let meter = opentelemetry::global::meter("github-metrics-exporter");
 
     // let one_metric_callback =
     //   async move |res: ObserverResult<u64>| {
@@ -77,7 +79,7 @@ async fn main() -> anyhow::Result<()> {
   //     .with_description("A ValueObserver set to 1.0")
   //     .init();
     
-    let state = Arc::new(AppState {exporter, github_client});//, pull_requests_gauge: newrecorder});
+    let state = Arc::new(AppState {exporter, github_client: github_client.clone(), opentelemetry_meter: meter});//, github_client});//, pull_requests_gauge: newrecorder});
 
     let make_svc = make_service_fn(move |_conn| {
       let state = state.clone();
