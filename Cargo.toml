@@ -13,7 +13,7 @@ keywords = ["github", "metrics", "exporter"]
 anyhow = "1.0.65"
 chrono = "0.4.22"
 hyper = { version = "0.14.20", features = ["server"] }
-octocrab = "0.16"
+octocrab = "0.17"
 opentelemetry = "0.17.0"
 opentelemetry-prometheus = "0.10.0"
 prometheus = "0.13.1"
