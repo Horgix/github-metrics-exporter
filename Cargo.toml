@@ -14,7 +14,7 @@ anyhow = "1.0.66"
 chrono = "0.4.22"
 hyper = { version = "0.14.22", features = ["server"] }
 octocrab = "0.17"
-opentelemetry = "0.17.0"
+opentelemetry = "0.18.0"
 opentelemetry-prometheus = "0.10.0"
 prometheus = "0.13.3"
 serde = "1.0.147"
