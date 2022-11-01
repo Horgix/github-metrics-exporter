@@ -17,6 +17,6 @@ octocrab = "0.17"
 opentelemetry = "0.17.0"
 opentelemetry-prometheus = "0.10.0"
 prometheus = "0.13.3"
-serde = "1.0.145"
+serde = "1.0.147"
 serde_json = "1.0.87"
 tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
