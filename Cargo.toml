@@ -18,5 +18,5 @@ opentelemetry = "0.17.0"
 opentelemetry-prometheus = "0.10.0"
 prometheus = "0.13.3"
 serde = "1.0.147"
-serde_json = "1.0.87"
+serde_json = "1.0.91"
 tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
