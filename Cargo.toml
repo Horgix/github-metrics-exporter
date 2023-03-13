@@ -11,7 +11,7 @@ keywords = ["github", "metrics", "exporter"]
 
 [dependencies]
 anyhow = "1.0.66"
-chrono = "0.4.22"
+chrono = "0.4.24"
 hyper = { version = "0.14.22", features = ["server"] }
 octocrab = "0.17"
 opentelemetry = "0.17.0"
